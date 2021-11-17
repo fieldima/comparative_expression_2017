@@ -194,6 +194,7 @@
 	# fix clade names
 	gene_trees_pruned = lapply( gene_trees_pruned, fix_hominini )
 
+	saveRDS(gene_trees_pruned, "arbutus/pruned_tree")
 
 ## Calibrate the gene trees so that the same speciation events have the same 
 ## ages across all trees. This makes the branch lengths comparable across 
@@ -207,7 +208,8 @@
 		)
 	
 	save.image( "manuscript_checkpoint_calibrate_trees.RData" )
-
+	saveRDS(gene_trees_calibrated, "arbutus/calibrated_tree")
+	
 
 ## Estimate model parameters for the evolution of Tau and add them to the 
 ## tree objects. This takes a while, so do it once here and reuse the 
