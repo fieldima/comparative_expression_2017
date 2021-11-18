@@ -161,7 +161,7 @@
 			left_join( expression, by = c( "G" = "Ensembl.Gene.ID" ) )
 		return( tree )
 	}
-	gene_trees_annotated = foreach( tree=gene_trees , .packages = ("magrittr")) %dopar% 
+	gene_trees_annotated = foreach( tree=gene_trees , .packages = c("magrittr", "tidyverse")) %dopar% 
 		add_expression_to_tree( tree )
 
 	# Free up memory
