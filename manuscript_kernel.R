@@ -156,11 +156,12 @@
 	# @data object. This maps the expression data to the tree tips
 
 	add_expression_to_tree = function( tree ){
-		tree@data %<>% 
+		tree@data$G %<>% as.character()
+	  tree@data %<>% 
 			left_join( expression, by = c( "G" = "Ensembl.Gene.ID" ) )
 		return( tree )
 	}
-	gene_trees_annotated = foreach( tree=gene_trees ) %dopar% 
+	gene_trees_annotated = foreach( tree=gene_trees , .packages = ("magrittr")) %dopar% 
 		add_expression_to_tree( tree )
 
 	# Free up memory
