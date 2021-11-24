@@ -39,6 +39,17 @@ adequacy <- function (tree, part) {
   result
 }
 
+toy <- calibrated[1:4]
+
+#Tests
+test1 <- adequacy(toy, 1)
+test2 <- adequacy(toy, 2)
+test3 <- adequacy(toy, 3)
+test4 <- adequacy(toy, 4)
+test5 <- adequacy(toy, 5)
+test6 <- adequacy(toy, 6)
+
+
 #Measure adequacy
 brain <- adequacy(calibrated, 1)
 heart <- adequacy(calibrated, 2)
