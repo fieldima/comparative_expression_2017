@@ -47,4 +47,4 @@ testis <- adequacy(calibrated, 4)
 cerebellum <- adequacy(calibrated, 5)
 liver <- adequacy(calibrated, 6)
 
-save.image(file = "arbutus/")
+save.image(file = "arbutus/adequacy.RData")
