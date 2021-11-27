@@ -33,23 +33,26 @@ adequacy <- function (tree, part) {
   result
 }
 
-toy <- calibrated[1:4]
-
-#Tests
-test1 <- adequacy(toy, 1)
-test2 <- adequacy(toy, 2)
-test3 <- adequacy(toy, 3)
-test4 <- adequacy(toy, 4)
-test5 <- adequacy(toy, 5)
-test6 <- adequacy(toy, 6)
-
+first_2k <- calibrated[1:2000]
 
 #Measure adequacy
-brain <- adequacy(calibrated, 1)
-heart <- adequacy(calibrated, 2)
-kidney <- adequacy(calibrated, 3)
-testis <- adequacy(calibrated, 4)
-cerebellum <- adequacy(calibrated, 5)
-liver <- adequacy(calibrated, 6)
+brain <- adequacy(first_2k, 1)
+saveRDS(brain, file = "arbutus/brain_fit")
+
+heart <- adequacy(first_2k, 2)
+saveRDS(heart, file = "arbutus/heart_fit")
+
+kidney <- adequacy(first_2k, 3)
+saveRDS(kidney, file = "arbutus/kidney_fit")
+
+testis <- adequacy(first_2k, 4)
+saveRDS(testis, file = "arbutus/testis_fit")
+
+cerebellum <- adequacy(first_2k, 5)
+saveRDS(cerebellum, file = "arbutus/cerebellum_fit")
+
+liver <- adequacy(first_2k, 6)
+saveRDS(liver, file = "arbutus/liver_fit")
+
 
 save.image(file = "arbutus/fitContinuous.RData")
