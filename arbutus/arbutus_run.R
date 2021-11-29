@@ -6,13 +6,17 @@ library(geiger)
 #Load test data
 toy_test <- readRDS("arbutus/toy_fit")
 
+run_arb <- function (fits){
+arb <- vector("list", length = length(toy_test))
+count = 1
 for(toy in toy_test){
   for(t in toy){
-    arbutus(t)
+    class(t) <- "gfit"
+    arb[[count]] <- arbutus(t)
+    count = count + 1
   }
 }
+arb
+}
 
-toy <- toy_test[[1]]
-t <- toy[[1]]
-arbutus(t[-5])
-gfit(t)
+run1 <- run_arb(toy_test)
