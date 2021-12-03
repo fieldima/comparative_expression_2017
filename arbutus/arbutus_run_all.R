@@ -66,6 +66,6 @@ p_df <- arbutus_transform(pvals)
 
 p_piv <- p_df %>% pivot_longer(cols = everything(), names_to = "tstat")
 
-p_piv %>% ggplot(aes(val)) + geom_histogram() + facet_wrap(~tstat)
+p_piv %>% ggplot(aes(value)) + geom_histogram() + facet_wrap(~tstat)
 
 ggsave("arbutus/pvals_all.png")
