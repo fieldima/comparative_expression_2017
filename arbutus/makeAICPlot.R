@@ -4,11 +4,9 @@
 library(tidyverse)
 
 #Load data
-toy_test <- readRDS("arbutus/toy_fit")
+data <- c(readRDS("arbutus/first_fit"),readRDS("arbutus/second_fit"),readRDS("arbutus/third_fit"))
 
 #First need to pull out model names
-test <- unlist(toy_test[[1]]) 
-
 model_count <- function (fit) {
   ou = 0
   bm = 0
@@ -20,8 +18,9 @@ model_count <- function (fit) {
   data.frame(OU = ou, BM = bm, EB = eb)
 }
 
-a <- model_count(toy_test)
+df <- model_count(data)
+saveRDS(data, file = "arbutus/fitdata")
 
-b <- a %>% pivot_longer(c(OU, BM, EB), names_to = "model")
+b <- df %>% pivot_longer(c(df.OU.2, df.BM.2, df.EB.2), names_to = "model")
 
 b %>% ggplot(aes(model, value)) + geom_col()

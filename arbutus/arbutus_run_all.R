@@ -5,7 +5,15 @@ library(geiger)
 library(tidyverse)
 
 #Load test data
-fitdata <- readRDS("arbutus/fitdata")
+brain <- c(readRDS("arbutus/brain_fit_first"), readRDS("arbutus/brain_fit_second"), readRDS("arbutus/brain_fit_third"))
+cerebellum <- c(readRDS("arbutus/cerebellum_fit_first"), readRDS("arbutus/cerebellum_fit_second"), readRDS("arbutus/cerebellum_fit_third"))
+heart <- c(readRDS("arbutus/heart_fit_first"), readRDS("arbutus/heart_fit_second"), readRDS("arbutus/heart_fit_third"))
+kidney <- c(readRDS("arbutus/kidney_fit_first"), readRDS("arbutus/kidney_fit_second"), readRDS("arbutus/kidney_fit_third"))
+liver <- c(readRDS("arbutus/liver_fit_first"), readRDS("arbutus/liver_fit_second"), readRDS("arbutus/liver_fit_third"))
+testis <- c(readRDS("arbutus/testis_fit_first"), readRDS("arbutus/testis_fit_second"), readRDS("arbutus/testis_fit_third"))
+
+all <- c(brain, cerebellum, heart, kidney, liver, testis)
+rm(brain, cerebellum, heart, kidney, liver, testis)
 
 rm_neg <- function (edge){
   ifelse(edge < 0, 1e-06, edge)
@@ -30,10 +38,10 @@ for(fit in fits){
 arby
 }
 
-run_arb(fitdata[36])
+test <- run_arb(all[1:3])
 
-arb_result <- run_arb(fitdata)
-saveRDS(arb_result, file = "arbutus/arbutus_results_mean")
+arb_result <- run_arb(all)
+saveRDS(arb_result, file = "arbutus/arbutus_results_all")
 
 count = 1
 pvals <- vector("list", length = length(arb_result))
@@ -56,7 +64,8 @@ arbutus_transform <- function ( pval , tib) {
 
 p_df <- arbutus_transform(pvals)
 
-p_piv <- p_df %>% pivot_longer(cols = everything(), names_to = "tstat") %>%
-  transmute(tstat, val = (ifelse(is.na(value), yes = 0, no = value)))
+p_piv <- p_df %>% pivot_longer(cols = everything(), names_to = "tstat")
 
 p_piv %>% ggplot(aes(val)) + geom_histogram() + facet_wrap(~tstat)
+
+ggsave("arbutus/pvals_all.png")
