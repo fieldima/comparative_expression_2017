@@ -18,9 +18,9 @@ model_count <- function (fit) {
   data.frame(OU = ou, BM = bm, EB = eb)
 }
 
-df <- model_count(data)
+df <- model_count(all)
 saveRDS(data, file = "arbutus/fitdata")
 
-b <- df %>% pivot_longer(c(df.OU.2, df.BM.2, df.EB.2), names_to = "model")
+b <- df %>% pivot_longer(c(OU, BM, EB), names_to = "model")
 
-b %>% ggplot(aes(model, value)) + geom_col()
+b %>% ggplot(aes(model, value)) + geom_col() + theme_classic()

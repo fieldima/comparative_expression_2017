@@ -68,10 +68,8 @@ p_piv <- p_df %>% pivot_longer(cols = everything(), names_to = "tstat")
 
 saveRDS(p_piv, file = "arbutus/samesimpiv")
 p_piv %>% ggplot(aes(value)) + geom_histogram() + facet_wrap(~tstat)
-ggsave("arbutus/samesimpvals")
+ggsave("arbutus/samesimpvals.png")
 
 #Removal of negatives caused 6 trees to no longer be ultrametric
 #neg <- calibrated[!ult]
 #pos <- calibrated[ult]
-
-save.image("same_sim_arbutus.RData")

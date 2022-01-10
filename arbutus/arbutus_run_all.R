@@ -26,8 +26,8 @@ for(fit in fits){
   for(f in fit){
     class(f) <- "gfit"
     unit_tree <- make_unit_tree(f)
-    unit_tree$phy["edge.length"] <- map(unit_tree$phy["edge.length"], rm_neg) #fixing negative edge lengths
-    print(unit_tree$phy["edge.length"])
+    unit_tree$phy["edge.length"] <- purrr::map(unit_tree$phy["edge.length"], rm_neg) #fixing negative edge lengths
+    print(paste(count, "done"))
     obs <- calculate_pic_stat(unit_tree)
     sim_tree <- simulate_char_unit(unit_tree)
     sim <- calculate_pic_stat(sim_tree)
@@ -38,14 +38,14 @@ for(fit in fits){
 arby
 }
 
-test <- run_arb(all[1:3])
+#test <- run_arb(all[1:200])
 
 arb_result <- run_arb(all)
 saveRDS(arb_result, file = "arbutus/arbutus_results_all")
 
 count = 1
-pvals <- vector("list", length = length(arb_result))
-for(arb in arb_result){
+pvals <- vector("list", length = length(all))
+for(arb in all){
   pvals[[count]] = arb$p.values
   count = count + 1
 }
@@ -66,6 +66,8 @@ p_df <- arbutus_transform(pvals)
 
 p_piv <- p_df %>% pivot_longer(cols = everything(), names_to = "tstat")
 
-p_piv %>% ggplot(aes(value)) + geom_histogram() + facet_wrap(~tstat)
+p_piv %>% ggplot(aes(value)) + geom_histogram() + facet_wrap(~tstat, nrow = 1) + theme_bw()
 
 ggsave("arbutus/pvals_all.png")
+
+#S.hgt has a lot of NA's, so I need to check node height values
