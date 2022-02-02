@@ -18,7 +18,7 @@ model_count <- function (fit) {
   data.frame(OU = ou, BM = bm, EB = eb)
 }
 
-df <- model_count(all)
+df <- model_count(data)
 saveRDS(data, file = "arbutus/fitdata")
 
 b <- df %>% pivot_longer(c(OU, BM, EB), names_to = "model")

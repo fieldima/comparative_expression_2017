@@ -44,8 +44,8 @@ arb_result <- run_arb(all)
 saveRDS(arb_result, file = "arbutus/arbutus_results_all")
 
 count = 1
-pvals <- vector("list", length = length(all))
-for(arb in all){
+pvals <- vector("list", length = length(arb_result))
+for(arb in arb_result){
   pvals[[count]] = arb$p.values
   count = count + 1
 }
@@ -63,10 +63,14 @@ arbutus_transform <- function ( pval , tib) {
 }
 
 p_df <- arbutus_transform(pvals)
+saveRDS(object = p_df, file = "arbutus/p_vals_df")
 
-p_piv <- p_df %>% pivot_longer(cols = everything(), names_to = "tstat")
+#remove m.sig
+p_piv <- p_df %>% select(!m.sig) %>% pivot_longer(cols = everything(), names_to = "tstat")
 
-p_piv %>% ggplot(aes(value)) + geom_histogram() + facet_wrap(~tstat, nrow = 1) + theme_bw()
+#reorder facets
+p_piv$tstat <- factor(p_piv$tstat, levels = c("c.var", "s.var", "s.asr", "s.hgt", "d.cdf"))
+p_piv %>% ggplot(aes(value, after_stat(density))) + geom_histogram() + facet_wrap(~tstat, nrow = 1) + theme_bw()
 
 ggsave("arbutus/pvals_all.png")
 
